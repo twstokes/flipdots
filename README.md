@@ -28,3 +28,19 @@ Nice-to-haves that currently aren't implemented:
 Build the firmware with `run pio` and follow the PlatformIO docs to upload it to a device.
 
 `/tools` - Various tools that helped with testing, mostly written using [Processing](https://processing.org/).
+
+## Hardware
+
+- [Alfa-Zeta XY5](https://flipdots.com/en/products-services/flip-dot-boards-xy5/) 14x28 (which is two 7x28 panels chained together)
+- [3.3v RS-485 to TTL](https://www.amazon.com/gp/product/B07V5LND1T/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) see `FlipDotController.h` for pinout
+- [ALITOVE AC 100-240V to DC 24V 5A Power Supply](https://www.amazon.com/gp/product/B01GC6VS8I/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1)
+- [BINZET DC 12V 24V to 5V 5A](https://www.amazon.com/gp/product/B00J3MHT1E/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) used to step down power to the MCU
+
+![flip_dots](https://github.com/twstokes/flipdots/assets/2092798/062ef1d4-39ad-4292-bbf9-71f32f422799)
+
+![image](https://github.com/twstokes/flipdots/assets/2092798/4a58bfba-464b-4f52-9440-dcd1af9e00c9)
+
+
+Alfa-Zeta provides documentation for their boards on how to configure the DIP switches on the back for the baud rate, panel addresses, magnetizing time, and a test mode. This documentation can be found in other repos as well as requested from the company (although it may require purchasing a panel first). The same goes for their RS-485 protocol which is really simple and mostly implemented in `FlipDotController.h`. I'm choosing not to include those documents in this repo because I'm not sure of the company's policy, but again, they are easily found by searching.
+
+The 24V -> 5V converter isn't necessary if you power the MCU independently with a 5V source, I just wanted a single power supply. I've since put the entire project behind a smart switch so I can say "Hey Siri, turn the flip dots on" and they come to life.
