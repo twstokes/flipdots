@@ -1,7 +1,7 @@
 # flipdots
 Driving Alfa-Zeta Flip Dots with an ESP8266
 
-https://github.com/twstokes/flipdots/assets/2092798/e8f1af45-21ba-4c02-af97-81e1b29c22db
+https://github.com/twstokes/flipdots/assets/2092798/b6714fcb-35dc-4459-a608-234dd7d56679
 
 This repo contains MCU code for driving dots on a 14x28 Alfa-Zeta XY5 display from [my blog post here](https://www.tannr.com/2021/03/31/flip-dots/). It's an experimental hack, but could serve as starting point for others wanted to do similar projects. It could easily be tweaked to handle larger or smaller panels. See [flipdots-ios](https://github.com/twstokes/flipdots-ios/) for the iOS / iPadOS / macOS client app.
 
@@ -33,10 +33,9 @@ Build the firmware with `run pio` and follow the PlatformIO docs to upload it to
 - [ALITOVE AC 100-240V to DC 24V 5A Power Supply](https://www.amazon.com/gp/product/B01GC6VS8I/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1)
 - [BINZET DC 12V 24V to 5V 5A](https://www.amazon.com/gp/product/B00J3MHT1E/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) used to step down power to the MCU
 
-![flip_dots](https://github.com/twstokes/flipdots/assets/2092798/062ef1d4-39ad-4292-bbf9-71f32f422799)
+![flip_dots](https://github.com/twstokes/flipdots/assets/2092798/5ceceb91-c845-42d1-8203-d8db8634f0e3)
 
-![image](https://github.com/twstokes/flipdots/assets/2092798/4a58bfba-464b-4f52-9440-dcd1af9e00c9)
-
+![flip_dots_wiring](https://github.com/twstokes/flipdots/assets/2092798/0f3b4696-e60a-4845-b948-c952b0bcf868)
 
 Alfa-Zeta provides documentation for their boards on how to configure the DIP switches on the back for the baud rate, panel addresses, magnetizing time, and a test mode. This documentation can be found in other repos as well as requested from the company (although it may require purchasing a panel first). The same goes for their RS-485 protocol which is really simple and mostly implemented in `FlipDotController.h`. I'm choosing not to include those documents in this repo because I'm not sure of the company's policy, but again, they are easily found by searching.
 
