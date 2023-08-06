@@ -1,6 +1,12 @@
 # flipdots
 Driving Alfa-Zeta Flip Dots with an ESP8266
 
+
+
+https://github.com/twstokes/flipdots/assets/2092798/e8f1af45-21ba-4c02-af97-81e1b29c22db
+
+
+
 This repo contains MCU code for driving dots on a 14x28 Alfa-Zeta XY5 display from [my blog post here](https://www.tannr.com/2021/03/31/flip-dots/). It's an experimental hack, but could serve as starting point for others wanted to do similar projects. It could easily be tweaked to handle larger or smaller panels.
 
 Features:
