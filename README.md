@@ -14,7 +14,7 @@ This repo contains MCU code for driving dots on a 14x28 Alfa-Zeta XY5 display fr
 - Listens for UDP packets containing a full screen buffer to draw to the board
 - Can draw locally with [Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
 
-Nice-to-haves that currently aren't implemented:
+**Nice-to-haves that currently aren't implemented:**
 - Sending delta changes (the full frame buffer is sent, which is inefficient in some cases)
 - Sending commands to run routines independently of an active client (e.g. send a command to scroll a string and then the client disconnects)
 
