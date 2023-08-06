@@ -28,6 +28,7 @@ Build the firmware with `run pio` and follow the PlatformIO docs to upload it to
 ## Hardware
 
 - [Alfa-Zeta XY5](https://flipdots.com/en/products-services/flip-dot-boards-xy5/) 14x28 (which is two 7x28 panels chained together)
+- [NodeMCU ESP8266](https://en.wikipedia.org/wiki/NodeMCU)
 - [3.3v RS-485 to TTL](https://www.amazon.com/gp/product/B07V5LND1T/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) see `FlipDotController.h` for pinout
 - [ALITOVE AC 100-240V to DC 24V 5A Power Supply](https://www.amazon.com/gp/product/B01GC6VS8I/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1)
 - [BINZET DC 12V 24V to 5V 5A](https://www.amazon.com/gp/product/B00J3MHT1E/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) used to step down power to the MCU
