@@ -20,6 +20,7 @@ This repo contains MCU code for driving dots on a 14x28 Alfa-Zeta XY5 display fr
 - `FlipDotController.h` - The Alfa-Zeta protocol implementation to communicate with the board over serial / RS-485.
 - `FlipDotMatrix.h` - Integration with the Adafruit GFX library.
 - `main.cpp` - The main driver of the MCU, demonstrating a UDP packet mode and drawing locally.
+- `auth.h.sample` - Copy to `auth.h` and fill in the appropriate values.
 
 Build the firmware with `run pio` and follow the PlatformIO docs to upload it to a device.
 

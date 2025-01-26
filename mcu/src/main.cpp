@@ -1,10 +1,9 @@
+#include "auth.h"
+
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <FlipDotMatrix.h>
-
-const char *ssid = "SSID HERE";
-const char *password = "PASSWORD HERE";
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210; // local port to listen on
@@ -14,6 +13,7 @@ FlipDotMatrix matrix = FlipDotMatrix(28, 14, &Serial, 57600);
 
 void setup()
 {
+    WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED)
