@@ -1,10 +1,9 @@
+#include "auth.h"
+
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <FlipDotMatrix.h>
-
-const char *ssid = "SSID HERE";
-const char *password = "PASSWORD HERE";
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210; // local port to listen on

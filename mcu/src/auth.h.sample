@@ -1,0 +1,2 @@
+const char *ssid = "SSID HERE";
+const char *password = "PASSWORD HERE";
