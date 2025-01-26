@@ -13,6 +13,7 @@ FlipDotMatrix matrix = FlipDotMatrix(28, 14, &Serial, 57600);
 
 void setup()
 {
+    WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED)
