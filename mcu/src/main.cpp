@@ -2,14 +2,21 @@
 
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
+#include <time.h>
 #include <WiFiUdp.h>
-#include <FlipDotMatrix.h>
 
-WiFiUDP Udp;
-unsigned int localUdpPort = 4210; // local port to listen on
-byte incomingPacket[255];         // buffer for incoming packets
+#include <FlipDotMatrix.h>
+#include <Fonts/TomThumb.h>
+
+#define NTP_SERVER "pool.ntp.org"
+#define NY_TZ "EST5EDT,M3.2.0,M11.1.0"
+
+time_t now;
+tm tm;
 
 FlipDotMatrix matrix = FlipDotMatrix(28, 14, &Serial, 57600);
+
+char buf[3];
 
 void setup()
 {
@@ -21,57 +28,29 @@ void setup()
         delay(500);
     }
 
-    Udp.begin(localUdpPort);
+    configTime(NY_TZ, NTP_SERVER);
 
     matrix.start();
     matrix.setTextColor(1);
     matrix.setTextWrap(false);
-}
-
-int x = matrix.width();
-
-void acceptPackets()
-{
-    int packetSize = Udp.parsePacket();
-    if (packetSize)
-    {
-        String reply;
-        // receive incoming UDP packets
-        int len = Udp.read(incomingPacket, 56); // <--- it may be nice to have a big buffer then truncate it
-        if (len > 0)
-        {
-            // this should be 56 from the client
-            // 28 1-byte rows, * 2
-            incomingPacket[len] = 0; // this terminates payload
-        }
-
-        matrix.replaceBoardBuffer(incomingPacket, len);
-        matrix.commitAndDisplayBuffer();
-    }
+    matrix.setFont(&TomThumb);
 }
 
 // driving the display from the MCU
-// void loop()
-// {
-//     matrix.fillScreen(0);
-//     matrix.setCursor(x, 4);
-//     matrix.print(F("Hi"));
-
-//     matrix.sendBufferToAllPanels(false); // todo - should be hidden
-//     // should there be a delay here, or is this sync?
-//     matrix.refreshDisplays();
-
-//     if (--x < -60)
-//     {
-//         x = matrix.width();
-//     }
-
-//     delay(50);
-// }
-
-// UDP framebuffer mode
 void loop()
 {
-    acceptPackets();
-    delay(50);
+    time(&now);
+    localtime_r(&now, &tm);
+
+    matrix.fillScreen(0);
+    matrix.setCursor(6, 9);
+    sprintf(buf, "%02d", tm.tm_hour);
+    matrix.print(buf);
+    matrix.print(":");
+    sprintf(buf, "%02d", tm.tm_min);
+    matrix.print(buf);
+    matrix.commitAndDisplayBuffer();
+
+    delay(5000);
 }
+
