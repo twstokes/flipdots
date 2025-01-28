@@ -18,6 +18,7 @@ public:
   void replaceBoardBuffer(byte newBuffer[], int bufferSize);
   void sendBufferToAllPanels(bool immediate);
   void commitAndDisplayBuffer();
+  void commitAndDisplayBufferQuietly(int delayMs);
 
 private:
   /*

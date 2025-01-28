@@ -46,7 +46,7 @@ void loop() {
   matrix.print(":");
   sprintf(buf, "%02d", tm.tm_min);
   matrix.print(buf);
-  matrix.commitAndDisplayBuffer();
+  matrix.commitAndDisplayBufferQuietly(500);
 
   delay(5000);
 }
