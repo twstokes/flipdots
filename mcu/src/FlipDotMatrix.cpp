@@ -1,4 +1,5 @@
 #include <FlipDotMatrix.h>
+#include <utils.h>
 
 // todo - command to invert all dots
 
@@ -35,13 +36,7 @@ void FlipDotMatrix::drawPixel(int16_t x, int16_t y, uint16_t color) {
   int col = x % PANEL_COLS;
   int dot = y % PANEL_ROWS;
 
-  if (color == 0) {
-    // clear the bit
-    boardBuffer[panel][col] &= ~(1 << dot);
-  } else {
-    // set the bit
-    boardBuffer[panel][col] |= (1 << dot);
-  }
+  setBitInColumn(&boardBuffer[panel][col], dot, color);
 }
 
 /*
@@ -123,14 +118,7 @@ void FlipDotMatrix::commitAndDisplayBufferQuietly(int delayMs) {
         if (pDot == cDot)
           continue;
 
-        if (cDot == 0) {
-          // clear the bit
-          previousBuffer[p][c] &= ~(1 << r);
-        } else {
-          // set the bit
-          previousBuffer[p][c] |= (1 << r);
-        }
-
+        setBitInColumn(&previousBuffer[p][c], r, cDot);
         sendBufferToPanel(p, previousBuffer[p], true);
         delay(delayMs);
       }
