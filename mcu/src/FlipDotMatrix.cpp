@@ -97,3 +97,43 @@ void FlipDotMatrix::commitAndDisplayBuffer() {
   sendBufferToAllPanels(false);
   refreshDisplays();
 }
+
+/*
+  spreads out writes to reduce sound
+  note that delayMs is added to any existing required delays,
+  such as the one in FlipDotController::writePayload
+*/
+void FlipDotMatrix::commitAndDisplayBufferQuietly(int delayMs) {
+  static byte previousBuffer[PANEL_COUNT][PANEL_COLS];
+
+  for (int p = 0; p < PANEL_COUNT; p++) {
+    for (int c = 0; c < PANEL_COLS; c++) {
+      byte pCol = previousBuffer[p][c];
+      byte cCol = boardBuffer[p][c];
+
+      // if the column byte matches, no need to proceed
+      if (pCol == cCol)
+        continue;
+
+      for (int r = 0; r < PANEL_ROWS; r++) {
+        bool pDot = pCol & (1 << r);
+        bool cDot = cCol & (1 << r);
+
+        // if the dot matches, no need to proceed
+        if (pDot == cDot)
+          continue;
+
+        if (cDot == 0) {
+          // clear the bit
+          previousBuffer[p][c] &= ~(1 << r);
+        } else {
+          // set the bit
+          previousBuffer[p][c] |= (1 << r);
+        }
+
+        sendBufferToPanel(p, previousBuffer[p], true);
+        delay(delayMs);
+      }
+    }
+  }
+}
