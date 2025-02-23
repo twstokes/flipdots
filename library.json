@@ -1,0 +1,26 @@
+{
+  "name": "Flipdots",
+  "version": "0.0.1",
+  "description": "Adafruit GFX-compatible library for Alfa-Zeta 28x7 flip dot panels.",
+  "keywords": "flipdots, vizualization, display, graphics",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/twstokes/flipdots.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Tanner Stokes",
+      "email": "tanner@tannr.com",
+      "url": "https://www.tannr.com"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://www.tannr.com",
+  "dependencies": {
+    "adafruit/Adafruit GFX Library": "^1.10.4"
+  },
+  "frameworks": "arduino",
+  "platforms": "*"
+}

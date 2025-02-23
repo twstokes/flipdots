@@ -1,1 +1,4 @@
+.pio
 .DS_Store
+auth.h
+*.swp
