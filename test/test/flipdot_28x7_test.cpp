@@ -107,22 +107,6 @@ void test_fill_screen(void) {
                         matrix.writtenPayloads[x][y + COLUMN_BYTES_OFFSET]);
     }
   }
-
-  // // test that fillScreen respects inversion
-  // TestFlipDotMatrix matrix2 = TestFlipDotMatrix(2, 1);
-  // // invert the display
-  // matrix2.invertDisplay(1);
-  // matrix2.resetStats();
-  // // the screen should be all zeros now because we're inverted
-  // matrix2.fillScreen(1);
-  // matrix2.show();
-
-  // for (int x = 0; x < 2; x++) {
-  //   for (int y = 0; y < 28; y++) {
-  //     TEST_ASSERT_EQUAL(0, matrix2.writtenPayloads[x][y +
-  //     COLUMN_BYTES_OFFSET]);
-  //   }
-  // }
 }
 
 // test inverting the screen
