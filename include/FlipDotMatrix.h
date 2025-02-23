@@ -22,7 +22,7 @@ public:
   void showQuietly(int delayMs);
 
   /// @brief                Computes the height of the matrix based on number of
-  /// panels and panels per row.
+  ///                       panels and panels per row.
   /// @param panels         Number of panels for the display.
   /// @param panelsPerRow   Number of panels per row.
   /// @return               Width of the matrix, or 0 if there was an error.
@@ -36,7 +36,7 @@ public:
   }
 
   /// @brief                Computes the height of the matrix based on number of
-  /// panels and panels per row.
+  ///                       panels and panels per row.
   /// @param panels         Number of panels for the display.
   /// @param panelsPerRow   Number of panels per row.
   /// @return               Height of the matrix, or 0 if there was an error.
@@ -48,8 +48,8 @@ public:
   }
 
   /// @brief          Takes in a byte representing a column and sets the row to
-  /// the provided value. Only 7 bits (PANEL_ROWS) are ever populated and the
-  /// MSB should remain 0, per the docs.
+  ///                 the provided value. Only 7 bits (PANEL_ROWS) are ever
+  ///                 populated and the MSB should remain 0, per the docs.
   /// @param colPtr   Pointer to the column
   /// @param rowIdx   Index of the row (the top dot index is 0)
   /// @param val      Boolean value of the dot

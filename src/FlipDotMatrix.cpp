@@ -1,8 +1,8 @@
 #include <FlipDotMatrix.h>
 
-/// @brief                FlipDotMatrix constructor.
-/// @param panels         Number of panels in the matrix.
-/// @param panelsPerRow   Number of panels per row.
+/// @brief                FlipDotMatrix constructor
+/// @param panels         Number of panels in the matrix
+/// @param panelsPerRow   Number of panels per row
 /// @param serial         Serial port to use
 /// @param baud           Serial baud rate
 FlipDotMatrix::FlipDotMatrix(uint8_t panels, uint8_t panelsPerRow,
@@ -20,7 +20,7 @@ FlipDotMatrix::~FlipDotMatrix() {
 }
 
 /// @brief Start the controller, fill the screen in the unflipped state and
-/// present it.
+///        present it.
 void FlipDotMatrix::start() {
   FlipDotController::start();
   fillScreen(0);
@@ -34,11 +34,11 @@ void FlipDotMatrix::sendBufferToAllPanels() {
   }
 }
 
-/// @brief            Sends a buffer to a panel.
+/// @brief            Sends a buffer to a panel
 /// @param p          Panel address (0 through panels - 1)
 /// @param buffer     Pointer to a buffer. Defaults to boardBuffer.
 /// @param immediate  If the board should present the buffer immediately upon
-/// receipt. Defaults to false.
+///                   receipt. Defaults to false.
 void FlipDotMatrix::sendBufferToPanel(uint8_t p, uint8_t *buffer,
                                       bool immediate) {
   // invalid panel
@@ -52,7 +52,7 @@ void FlipDotMatrix::sendBufferToPanel(uint8_t p, uint8_t *buffer,
 }
 
 /// @brief        Draws a pixel (dot) to the display using the global matrix
-/// coordinates.
+///               coordinates.
 /// @param x      X coordinate
 /// @param y      Y coordinate
 /// @param color  Flipped or unflipped.
@@ -89,18 +89,17 @@ void FlipDotMatrix::drawPixel(int16_t x, int16_t y, uint16_t color) {
   setBitInColumn(colPtr, row, color);
 }
 
-/// @brief        Fills the board buffer with the supplied color.
+/// @brief        Fills the board buffer with the supplied color
 /// @param color  Flipped or unflipped boolean
 void FlipDotMatrix::fillScreen(uint16_t color) {
-  // if color is black, show black, else set first 7 bits in byte to 1
-  // the MSB should always be 0 per the docs, since only the first 7 bits are
-  // used
-
   // convert to bool
   bool boolColor = color != 0;
   // respect inversion
   boolColor = inverted ? !boolColor : boolColor;
   // write the column
+  // if color is black, show black, else set first 7 bits in byte to 1
+  // the MSB should always be 0 per the docs, since only the first 7 bits are
+  // used
   const uint8_t colValue = boolColor ? 0x7F : 0;
 
   for (uint8_t col = 0; col < panels * PANEL_COLS; col++) {
@@ -116,8 +115,8 @@ void FlipDotMatrix::show() {
 }
 
 /// @brief    Sets the display to an inversion mode where dot flips are
-/// opposite. When set to a new value it will update the exiting board buffer
-/// and display it immediately.
+///           opposite. When set to a new value it will update the exiting board
+///           buffer and display it immediately.
 /// @param i  Boolean to turn the mode on or off.
 void FlipDotMatrix::invertDisplay(bool i) {
   if (i == inverted) {
@@ -142,10 +141,10 @@ uint8_t *FlipDotMatrix::initializeBuffer() {
 }
 
 /// @brief          Flips individual dots when committing to the display to
-/// reduce sound.
+///                 reduce sound.
 /// @param delayMs  Delay in milliseconds per dot flip. This delay is added to
-/// any existing required delays, such as the one in
-/// FlipDotController::writePayload.
+///                 any existing required delays, such as the one in
+///                 FlipDotController::writePayload.
 void FlipDotMatrix::showQuietly(int delayMs) {
   if (deltaBuffer == NULL) {
     if (!(deltaBuffer = initializeBuffer()))
