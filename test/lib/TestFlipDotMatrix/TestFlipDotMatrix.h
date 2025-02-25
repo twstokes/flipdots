@@ -8,7 +8,7 @@
 class TestFlipDotMatrix: public FlipDotMatrix {
 
 	public:
-    TestFlipDotMatrix(uint8_t panels, uint8_t panelsPerRow);
+    TestFlipDotMatrix(FlipDotController::PanelType p, uint8_t panels, uint8_t panelsPerRow);
     // 2d array to keep a history of the written payloads
     uint8_t writtenPayloads[MAX_PAYLOADS][MAX_PAYLOAD_LENGTH];
     // array to track the size of payloads

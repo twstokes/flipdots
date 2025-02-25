@@ -4,15 +4,13 @@
 #include <Adafruit_GFX.h>
 #include <FlipDotController.h>
 
-// there are 28 columns per panel
-#define PANEL_COLS 28
 // there are 7 dots per column
 #define PANEL_ROWS 7
 
-class FlipDotMatrix : public Adafruit_GFX, public FlipDotController {
+class FlipDotMatrix : protected FlipDotController, public Adafruit_GFX {
 public:
-  FlipDotMatrix(uint8_t panels, uint8_t panelsPerRow, HardwareSerial *serial,
-                int baud);
+  FlipDotMatrix(FlipDotController::PanelType panelType, uint8_t panels,
+                uint8_t panelsPerRow, HardwareSerial *serial, int baud);
   ~FlipDotMatrix();
   void start();
   void drawPixel(int16_t x, int16_t y, uint16_t color) override;
@@ -25,14 +23,16 @@ public:
   ///                       panels and panels per row.
   /// @param panels         Number of panels for the display.
   /// @param panelsPerRow   Number of panels per row.
+  /// @param panelColumns   Number of columns per panel.
   /// @return               Width of the matrix, or 0 if there was an error.
-  static uint8_t computeMatrixWidth(uint8_t panels, uint8_t panelsPerRow) {
+  static uint8_t computeMatrixWidth(uint8_t panels, uint8_t panelsPerRow,
+                                    uint8_t panelColumns) {
     // passing panels only to make sure the matrix is a rectangle
     // if not, we return 0
     if (panels % panelsPerRow)
       return 0;
 
-    return panelsPerRow * PANEL_COLS;
+    return panelsPerRow * panelColumns;
   }
 
   /// @brief                Computes the height of the matrix based on number of

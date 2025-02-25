@@ -1,6 +1,6 @@
 {
   "name": "Flipdots",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Adafruit GFX-compatible library for Alfa-Zeta 28x7 flip dot panels.",
   "keywords": "flipdots, vizualization, display, graphics",
   "repository":

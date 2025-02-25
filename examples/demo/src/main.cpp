@@ -1,8 +1,8 @@
 #include "Arduino.h"
 #include <FlipDotMatrix.h>
 
-// two panels total, 1 panel per row, 57600 baud rate
-FlipDotMatrix matrix = FlipDotMatrix(2, 1, &Serial, 57600);
+// 28x7 panel type, two panels total, 1 panel per row, 57600 baud rate
+FlipDotMatrix matrix = FlipDotMatrix(FlipDotController::PanelType::p28x7, 2, 1, &Serial, 57600);
 
 // flap the entire display
 void flapper() {

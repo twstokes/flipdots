@@ -1,7 +1,8 @@
 #include <FlipDotController.h>
 
-FlipDotController::FlipDotController(HardwareSerial *serial, int baud)
-    : serial(serial), baud(baud) {}
+FlipDotController::FlipDotController(PanelType p, HardwareSerial *serial,
+                                     int baud)
+    : panelType(p), serial(serial), baud(baud) {}
 
 /// @brief Starts communication with the flip dot controller. Must be called
 ///        before using the display.
@@ -40,16 +41,18 @@ void FlipDotController::refreshDisplays() {
 ///                   all buffers.
 void FlipDotController::sendBufferToPanel(uint8_t address, const uint8_t *data,
                                           bool immediate) {
-  uint8_t payload[CMD_FRAME_SIZE];
+  // data for the panel + commands
+  const uint8_t frameSize = getColumnCount() + 4;
+  uint8_t payload[frameSize];
 
   payload[0] = FRAME_START;
-  payload[1] = immediate ? CMD_SEND_AND_REFRESH : CMD_SEND_NO_REFRESH;
+  payload[1] = immediate ? getRefreshCommand() : getNoRefreshCommand();
   payload[2] = address;
 
-  for (int c = 0; c < DATA_BYTES; c++) {
+  for (int c = 0; c < getColumnCount(); c++) {
     payload[c + 3] = data[c];
   }
 
-  payload[CMD_FRAME_SIZE - 1] = FRAME_END;
-  writePayload(payload, CMD_FRAME_SIZE);
+  payload[frameSize - 1] = FRAME_END;
+  writePayload(payload, frameSize);
 }
