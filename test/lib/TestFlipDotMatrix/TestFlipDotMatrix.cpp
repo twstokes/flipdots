@@ -1,4 +1,3 @@
-
 #include <TestFlipDotMatrix.h>
 
 TestFlipDotMatrix::TestFlipDotMatrix(FlipDotController::PanelType p, uint8_t panels, uint8_t panelsPerRow)

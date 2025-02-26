@@ -19,7 +19,8 @@
   "license": "MIT",
   "homepage": "https://www.tannr.com",
   "dependencies": {
-    "adafruit/Adafruit GFX Library": "^1.10.4"
+    "adafruit/Adafruit GFX Library": "^1.10.4",
+    "adafruit/Adafruit BusIO": "^1.17.0"
   },
   "frameworks": "arduino",
   "platforms": "*"
