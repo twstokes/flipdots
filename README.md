@@ -1,4 +1,4 @@
-# flipdots
+# flipdotmatrix
 [Adafruit GFX-compatible](https://github.com/adafruit/Adafruit-GFX-Library) library for drawing to [Alfa-Zeta flip dot panels](https://flipdots.com/).
 
 https://github.com/twstokes/flipdots/assets/2092798/b6714fcb-35dc-4459-a608-234dd7d56679
