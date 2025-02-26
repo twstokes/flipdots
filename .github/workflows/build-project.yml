@@ -3,7 +3,7 @@ name: PlatformIO CI
 on: [push]
 
 jobs:
-  Build Examples:
+  Build-Examples:
     runs-on: ubuntu-latest
     
     steps:
