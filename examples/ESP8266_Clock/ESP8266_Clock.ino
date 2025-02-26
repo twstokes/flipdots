@@ -3,8 +3,6 @@
     an NTP server and display it.
 */
 
-#include "auth.h"
-
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
@@ -15,6 +13,15 @@
 #define NTP_SERVER "pool.ntp.org"
 // New York time zone - change accordingly
 #define NY_TZ "EST5EDT,M3.2.0,M11.1.0"
+
+#ifndef WIFIAUTH
+// Change to a valid Wi-Fi connection
+#define SSID "SSID_HERE"
+#define PASS "PASSWORD_HERE"
+#endif
+
+const char *ssid = SSID;
+const char *password = PASS;
 
 time_t now;
 tm tm;

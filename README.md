@@ -78,7 +78,7 @@ This repo is configured as a library so that it can be consumed by development e
 - `include` - Matrix and controller headers
 - `src` - Matrix and controller implementation
 - `test` - Tests (An ESP8266 has to be connected to run these)
-- `examples` - Example code configured as PlatformIO projects. They were built on *nix systems and an ESP8266, so some tweaks will need to be made to compile and run on other platforms (e.g. Windows + Arduino UNO), although it shouldn't take much work.
+- `examples` - Example sketches.
 - `scripts` - Some scripts for compiling, formatting, and testing
 
 ## Hardware
