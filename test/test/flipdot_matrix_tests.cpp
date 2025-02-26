@@ -18,7 +18,8 @@ void test_matrix_size(void) {
    * layout: 0
    *         1
    */
-  TestFlipDotMatrix matrix = TestFlipDotMatrix(2, 1);
+  TestFlipDotMatrix matrix =
+      TestFlipDotMatrix(FlipDotController::PanelType::p28x7, 2, 1);
   TEST_ASSERT_EQUAL(28, matrix.width());
   TEST_ASSERT_EQUAL(14, matrix.height());
 
@@ -26,25 +27,32 @@ void test_matrix_size(void) {
    * layout: 0 1
    *         2 3
    */
-  TestFlipDotMatrix matrix2 = TestFlipDotMatrix(4, 2);
+  TestFlipDotMatrix matrix2 =
+      TestFlipDotMatrix(FlipDotController::PanelType::p28x7, 4, 2);
   TEST_ASSERT_EQUAL(56, matrix2.width());
   TEST_ASSERT_EQUAL(14, matrix2.height());
+
+  TestFlipDotMatrix matrix3 =
+      TestFlipDotMatrix(FlipDotController::PanelType::p14x7, 4, 2);
+  TEST_ASSERT_EQUAL(28, matrix3.width());
+  TEST_ASSERT_EQUAL(14, matrix3.height());
 }
 
 // test that invalid layouts default to 0x0
 void test_matrix_invalid_size(void) {
   // a matrix has to be in a rectangular layout
   // otherwise the library should return zeros for dimensions
-  TestFlipDotMatrix matrix = TestFlipDotMatrix(4, 3);
+  TestFlipDotMatrix matrix =
+      TestFlipDotMatrix(FlipDotController::PanelType::p28x7, 4, 3);
   TEST_ASSERT_EQUAL(0, matrix.width());
   TEST_ASSERT_EQUAL(0, matrix.height());
 }
 
 // test that dimensions are calculated properly
 void test_compute_matrix_dimensions(void) {
-  TEST_ASSERT_EQUAL(28, FlipDotMatrix::computeMatrixWidth(2, 1));
-  TEST_ASSERT_EQUAL(56, FlipDotMatrix::computeMatrixWidth(2, 2));
-  TEST_ASSERT_EQUAL(0, FlipDotMatrix::computeMatrixWidth(4, 3));
+  TEST_ASSERT_EQUAL(28, FlipDotMatrix::computeMatrixWidth(2, 1, 28));
+  TEST_ASSERT_EQUAL(56, FlipDotMatrix::computeMatrixWidth(2, 2, 28));
+  TEST_ASSERT_EQUAL(0, FlipDotMatrix::computeMatrixWidth(4, 3, 28));
 
   TEST_ASSERT_EQUAL(14, FlipDotMatrix::computeMatrixHeight(2, 1));
   TEST_ASSERT_EQUAL(7, FlipDotMatrix::computeMatrixHeight(2, 2));
@@ -63,8 +71,9 @@ void test_set_bit_in_column(void) {
 }
 
 // test the payloads that are sent to the flip dot controller
-void test_payload(void) {
-  TestFlipDotMatrix matrix = TestFlipDotMatrix(2, 1);
+void test_payload_28x7(void) {
+  TestFlipDotMatrix matrix =
+      TestFlipDotMatrix(FlipDotController::PanelType::p28x7, 2, 1);
   // flip the 1st, 3rd, and 5th dot of the first panel's column
   matrix.drawPixel(0, 0, 1);
   matrix.drawPixel(0, 2, 1);
@@ -85,9 +94,33 @@ void test_payload(void) {
   TEST_ASSERT_EQUAL(64, matrix.writtenPayloads[1][27 + COLUMN_BYTES_OFFSET]);
 }
 
+void test_payload_7x7(void) {
+  TestFlipDotMatrix matrix =
+      TestFlipDotMatrix(FlipDotController::PanelType::p7x7, 2, 1);
+  // flip the 1st, 3rd, and 5th dot of the first panel's column
+  matrix.drawPixel(0, 0, 1);
+  matrix.drawPixel(0, 2, 1);
+  matrix.drawPixel(0, 4, 1);
+  // flip the dot in the bottom-right corner of the second panel
+  matrix.drawPixel(6, 13, 1);
+  matrix.show();
+
+  // two panels with 7 columns + four frame bytes
+  TEST_ASSERT_EQUAL(11, matrix.payloadSizes[0]);
+  TEST_ASSERT_EQUAL(11, matrix.payloadSizes[1]);
+  // three total payloads written - two to write to the panels, one to tell the
+  // panels to refresh
+  TEST_ASSERT_EQUAL(3, matrix.payloadsWritten);
+  // the first column of the first panel should have three dots flipped - the
+  // 1st, 3rd, and 5th
+  TEST_ASSERT_EQUAL(21, matrix.writtenPayloads[0][COLUMN_BYTES_OFFSET]);
+  TEST_ASSERT_EQUAL(64, matrix.writtenPayloads[1][6 + COLUMN_BYTES_OFFSET]);
+}
+
 // test that filling the screen succeeds
 void test_fill_screen(void) {
-  TestFlipDotMatrix matrix = TestFlipDotMatrix(5, 1);
+  TestFlipDotMatrix matrix =
+      TestFlipDotMatrix(FlipDotController::PanelType::p28x7, 5, 1);
   matrix.show();
 
   for (int x = 0; x < 5; x++) {
@@ -111,7 +144,8 @@ void test_fill_screen(void) {
 
 // test inverting the screen
 void test_inversion(void) {
-  TestFlipDotMatrix matrix = TestFlipDotMatrix(2, 1);
+  TestFlipDotMatrix matrix =
+      TestFlipDotMatrix(FlipDotController::PanelType::p28x7, 2, 1);
   // flip the 1st, 3rd, and 5th dot of the first panel's column
   matrix.drawPixel(0, 0, 1);
   matrix.drawPixel(0, 2, 1);
@@ -165,7 +199,8 @@ int runUnityTests(void) {
   UNITY_BEGIN();
   RUN_TEST(test_matrix_size);
   RUN_TEST(test_matrix_invalid_size);
-  RUN_TEST(test_payload);
+  RUN_TEST(test_payload_28x7);
+  RUN_TEST(test_payload_7x7);
   RUN_TEST(test_fill_screen);
   RUN_TEST(test_inversion);
   RUN_TEST(test_compute_matrix_dimensions);

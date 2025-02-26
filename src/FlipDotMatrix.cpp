@@ -5,11 +5,13 @@
 /// @param panelsPerRow   Number of panels per row
 /// @param serial         Serial port to use
 /// @param baud           Serial baud rate
-FlipDotMatrix::FlipDotMatrix(uint8_t panels, uint8_t panelsPerRow,
+FlipDotMatrix::FlipDotMatrix(FlipDotController::PanelType panelType,
+                             uint8_t panels, uint8_t panelsPerRow,
                              HardwareSerial *serial, int baud)
-    : Adafruit_GFX(computeMatrixWidth(panels, panelsPerRow),
+    : FlipDotController(panelType, serial, baud),
+      Adafruit_GFX(computeMatrixWidth(panels, panelsPerRow, getColumnCount()),
                    computeMatrixHeight(panels, panelsPerRow)),
-      FlipDotController(serial, baud), panels(panels) {
+      panels(panels) {
   boardBuffer = initializeBuffer();
   deltaBuffer = NULL;
 }
@@ -48,7 +50,8 @@ void FlipDotMatrix::sendBufferToPanel(uint8_t p, uint8_t *buffer,
   if (!buffer) {
     buffer = boardBuffer;
   }
-  FlipDotController::sendBufferToPanel(p, buffer + (p * PANEL_COLS), immediate);
+  FlipDotController::sendBufferToPanel(p, buffer + (p * getColumnCount()),
+                                       immediate);
 }
 
 /// @brief        Draws a pixel (dot) to the display using the global matrix
@@ -81,11 +84,12 @@ void FlipDotMatrix::drawPixel(int16_t x, int16_t y, uint16_t color) {
     break;
   }
 
-  int panel = x / PANEL_COLS + (y / PANEL_ROWS) * (WIDTH / PANEL_COLS);
-  int col = x % PANEL_COLS;
+  int panel =
+      x / getColumnCount() + (y / PANEL_ROWS) * (WIDTH / getColumnCount());
+  int col = x % getColumnCount();
   int row = y % PANEL_ROWS;
 
-  uint8_t *colPtr = boardBuffer + (panel * PANEL_COLS) + col;
+  uint8_t *colPtr = boardBuffer + (panel * getColumnCount()) + col;
   setBitInColumn(colPtr, row, color);
 }
 
@@ -102,7 +106,7 @@ void FlipDotMatrix::fillScreen(uint16_t color) {
   // used
   const uint8_t colValue = boolColor ? 0x7F : 0;
 
-  for (uint8_t col = 0; col < panels * PANEL_COLS; col++) {
+  for (uint8_t col = 0; col < panels * getColumnCount(); col++) {
     *(boardBuffer + col) = colValue;
   }
 }
@@ -123,7 +127,7 @@ void FlipDotMatrix::invertDisplay(bool i) {
     return;
   }
   inverted = !inverted;
-  for (uint8_t col = 0; col < panels * PANEL_COLS; col++) {
+  for (uint8_t col = 0; col < panels * getColumnCount(); col++) {
     *(boardBuffer + col) = ~*(boardBuffer + col) & 0x7F;
   }
   show();
@@ -132,7 +136,7 @@ void FlipDotMatrix::invertDisplay(bool i) {
 /// @brief  Initializes a buffer capable of storing all matrix values
 /// @return A buffer zero-initialized or NULL if memory couldn't be allocated.
 uint8_t *FlipDotMatrix::initializeBuffer() {
-  uint16_t bytes = panels * PANEL_COLS;
+  uint16_t bytes = panels * getColumnCount();
   uint8_t *buffer = (uint8_t *)malloc(bytes);
   if (buffer) {
     memset(buffer, 0, bytes);
@@ -152,9 +156,9 @@ void FlipDotMatrix::showQuietly(int delayMs) {
   }
 
   for (int p = 0; p < panels; p++) {
-    for (int c = 0; c < PANEL_COLS; c++) {
-      uint8_t *deltaColPtr = deltaBuffer + (p * PANEL_COLS) + c;
-      uint8_t *boardColPtr = boardBuffer + (p * PANEL_COLS) + c;
+    for (int c = 0; c < getColumnCount(); c++) {
+      uint8_t *deltaColPtr = deltaBuffer + (p * getColumnCount()) + c;
+      uint8_t *boardColPtr = boardBuffer + (p * getColumnCount()) + c;
 
       // if the column byte matches, no need to proceed
       if (*deltaColPtr == *boardColPtr)

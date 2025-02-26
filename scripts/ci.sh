@@ -1,3 +1,4 @@
 #!/bin/sh
 
-pio ci ../examples/demo -b nodemcuv2 -l ../ && pio ci ../examples/clock -b nodemcuv2 -l ../
+pio ci examples/Demo -b nodemcuv2 -l . --project-option="lib_deps=Adafruit GFX Library" && 
+pio ci examples/ESP8266_Clock -b nodemcuv2 -l . --project-option="lib_deps=Adafruit GFX Library"

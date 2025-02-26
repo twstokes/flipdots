@@ -1,3 +1,0 @@
-// copy or rename this file to auth.h and fill in the values to connect to WiFi
-const char *ssid = "SSID HERE";
-const char *password = "PASSWORD HERE";

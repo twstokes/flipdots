@@ -9,7 +9,7 @@ https://github.com/twstokes/flipdots/assets/2092798/b6714fcb-35dc-4459-a608-234d
 
 ## Features
 - Compatible with boards running Arduino firmware (Arduino UNO, ESP8266, etc.)
-- Supports one or more **28x7 panels** in a grid layout (other types of panels are planned)
+- Supports 28x7, 14x7, and 7x7 panels in a grid layout
 - Communicates serially to an Alfa-Zeta panel using their protocol
 - Supports [Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library) drawing functions like:
   - Graphics primitives (points, lines, circles, rectangles)
@@ -29,8 +29,8 @@ https://github.com/twstokes/flipdots/assets/2092798/b6714fcb-35dc-4459-a608-234d
 
 bool flipped = false;
 
-// two panels total, one panel per row, 57600 baud rate
-FlipDotMatrix matrix = FlipDotMatrix(2, 1, &Serial, 57600);
+// 28x7 panel type, two panels total, one panel per row, 57600 baud rate
+FlipDotMatrix matrix = FlipDotMatrix(FlipDotController::PanelType::p28x7, 2, 1, &Serial, 57600);
 
 void setup() {
   // starts up serial connection, fills the board
@@ -54,7 +54,7 @@ void loop() {
 
 ## Memory considerations
 
-Every column on a panel gets a byte of memory. 7 bits of the byte represent the state of the 7 dots in the column, and the MSB is always zero. To store the matrix in memory, `panels * PANEL_COLS` is allocated. For two 28x7 panels this would be **56 bytes total**.
+Every column on a panel gets a byte of memory. 7 bits of the byte represent the state of the 7 dots in the column, and the MSB is always zero. To store the matrix in memory, `panels * [number of columns in a panel]` is allocated. For two 28x7 panels this would be **56 bytes total**.
 
 A second buffer of the same size can also be allocated if certain methods need to compare what was drawn previously to what is currently being drawn. If those methods are never called, that buffer is not allocated.
 
@@ -78,7 +78,7 @@ This repo is configured as a library so that it can be consumed by development e
 - `include` - Matrix and controller headers
 - `src` - Matrix and controller implementation
 - `test` - Tests (An ESP8266 has to be connected to run these)
-- `examples` - Example code configured as PlatformIO projects. They were built on *nix systems and an ESP8266, so some tweaks will need to be made to compile and run on other platforms (e.g. Windows + Arduino UNO), although it shouldn't take much work.
+- `examples` - Example sketches.
 - `scripts` - Some scripts for compiling, formatting, and testing
 
 ## Hardware
