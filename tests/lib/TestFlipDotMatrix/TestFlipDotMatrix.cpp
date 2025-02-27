@@ -1,7 +1,8 @@
 #include <TestFlipDotMatrix.h>
 
-TestFlipDotMatrix::TestFlipDotMatrix(FlipDotController::PanelType p, uint8_t panels, uint8_t panelsPerRow)
-  : FlipDotMatrix(p, panels, panelsPerRow, &Serial, 57600) {}
+TestFlipDotMatrix::TestFlipDotMatrix(FlipDotController::PanelType p,
+                                     uint8_t panels, uint8_t panelsPerRow)
+    : FlipDotMatrix(p, panels, panelsPerRow, &Serial, 57600) {}
 
 void TestFlipDotMatrix::writePayload(const uint8_t *payload, int size) {
   for (int x = 0; x < size; x++) {
