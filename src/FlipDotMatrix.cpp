@@ -1,6 +1,7 @@
 #include <FlipDotMatrix.h>
 
 /// @brief                FlipDotMatrix constructor
+/// @param panelType      Type of panel, e.g. 28x7, 14x7, 7x7
 /// @param panels         Number of panels in the matrix
 /// @param panelsPerRow   Number of panels per row
 /// @param serial         Serial port to use
@@ -112,7 +113,7 @@ void FlipDotMatrix::fillScreen(uint16_t color) {
 }
 
 /// @brief Convenience method to send the buffer to all panels and commit
-/// (display) it.
+///        (display) it.
 void FlipDotMatrix::show() {
   sendBufferToAllPanels();
   refreshDisplays();
