@@ -75,9 +75,9 @@ _Note: If the image renders correctly but needs to be rotated, use the [`setRota
 This repo is configured as a library so that it can be consumed by development environments like [Arduino IDE](https://www.arduino.cc/en/software) and [PlatformIO](https://platformio.org/).
 
 - `library.properties` - Library metadata
-- `src` - Library source.
+- `src` - Library source
 - `tests` - Tests (An ESP8266 has to be connected to run these)
-- `examples` - Example sketches.
+- `examples` - Example sketches
 - `scripts` - Some scripts for compiling, formatting, and testing
 
 ## Hardware
