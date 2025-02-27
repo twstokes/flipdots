@@ -1,6 +1,6 @@
 /*
     Uses an ESP8266 to fetch the current time from
-    an NTP server and display it.
+    an NTP server and displays it.
 */
 
 #include "Arduino.h"
