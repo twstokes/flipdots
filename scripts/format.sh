@@ -1,3 +1,3 @@
 #!/bin/sh
 
-clang-format -i ../include/* ../src/* ../test/test/* ../test/src/*
+clang-format -i ../src/* ../tests/test/* ../tests/lib/TestFlipDotMatrix/*
