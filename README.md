@@ -16,7 +16,7 @@ https://github.com/twstokes/flipdots/assets/2092798/b6714fcb-35dc-4459-a608-234d
   - Text with customizable fonts
   - Canvas rotation
   - Inversion
-- Basic tests are implemented (see `test` directory)
+- Basic tests are implemented (see `tests` directory)
 
 ## Quickstart
 1. Make sure the panels are configured to be addressed in sequential order (see [panel layout requirements](#panel-layout-requirements)).
@@ -74,10 +74,9 @@ _Note: If the image renders correctly but needs to be rotated, use the [`setRota
 
 This repo is configured as a library so that it can be consumed by development environments like [Arduino IDE](https://www.arduino.cc/en/software) and [PlatformIO](https://platformio.org/).
 
-- `library.json` - Library metadata
-- `include` - Matrix and controller headers
-- `src` - Matrix and controller implementation
-- `test` - Tests (An ESP8266 has to be connected to run these)
+- `library.properties` - Library metadata
+- `src` - Library source.
+- `tests` - Tests (An ESP8266 has to be connected to run these)
 - `examples` - Example sketches.
 - `scripts` - Some scripts for compiling, formatting, and testing
 

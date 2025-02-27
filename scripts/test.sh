@@ -1,1 +1,1 @@
-pio test -d ../test -c ../test/platformio.ini
+pio test -d ../tests -c ../tests/platformio.ini
